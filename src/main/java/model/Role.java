@@ -18,7 +18,7 @@ import javax.persistence.*;
 })
 public class Role extends BaseEntity<Integer> {
 
-    @Column(name = "role_title")
+    @Column(name = "role_title", unique = true)
     private String title;
 
 

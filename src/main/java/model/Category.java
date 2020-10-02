@@ -18,7 +18,7 @@ import javax.persistence.*;
 })
 public class Category extends BaseEntity<Integer> {
 
-    @Column(name = "category_title")
+    @Column(name = "category_title", unique = true)
     private String title;
 
     @Column(name = "category_description")

@@ -18,7 +18,7 @@ import javax.persistence.*;
 })
 public class Tag extends BaseEntity<Integer> {
 
-    @Column(name = "tag_title")
+    @Column(name = "tag_title", unique = true)
     private String title;
 
 

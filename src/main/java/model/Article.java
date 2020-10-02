@@ -16,9 +16,12 @@ import java.util.Set;
 @Table(name = "Article", catalog = "hw11b", schema = "hw11b")
 @NamedQueries({
         @NamedQuery(name = "Article.findAll", query = "select a from Article a"),
+        @NamedQuery(name = "Article.published", query = "select a from Article a where a.state=:true"),
         @NamedQuery(name = "Article.findByUser", query = "select a from Article a where a.user.id=:id"),
         @NamedQuery(name = "Article.findAllPublished", query = "select a from Article a where a.state = true"),
-        @NamedQuery(name = "Article.findByTitle", query = "select a from Article a where a.title =:title")
+        @NamedQuery(name = "Article.findByTitle", query = "select a from Article a where a.title =:title"),
+        @NamedQuery(name = "Article.findByCategory", query = "select a from Article a where a.category.id =:id")
+
 })
 public class Article extends BaseEntity<Integer> {
 
@@ -46,11 +49,11 @@ public class Article extends BaseEntity<Integer> {
     @Column(name = "publish_states")
     private Boolean state;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Category category;
 
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)

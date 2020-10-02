@@ -22,5 +22,20 @@ public class Utils {
 
     public static EntityManager managerB = factoryB.createEntityManager();
 
+    public static int checkIntInput(int start, int end) {
+        boolean valid = false;
+        int input = 0;
+        do {
+            try {
+                input = Integer.parseInt(scanner.nextLine().trim());
+            } catch (Exception e) {
+                continue;
+            }
+            if (end >= input && start <= input) {
+                valid = true;
+            }
+        } while (!valid);
+        return input;
+    }
 
 }

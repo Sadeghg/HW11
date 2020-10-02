@@ -6,7 +6,6 @@ import template.model.BaseEntity;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -17,11 +16,12 @@ import java.util.Set;
 @Table(name = "User", catalog = "hw11a", schema = "hw11a")
 @NamedQueries({
         @NamedQuery(name = "User.findAll", query = "select u from User u"),
-        @NamedQuery(name = "User.findByUsername", query = "select u from User u where u.userName =:username")
+        @NamedQuery(name = "User.findByUsername", query = "select u from User u where u.userName =:username"),
+        @NamedQuery(name = "User.login", query = "select u from User u where u.userName=:username and u.password=:password"),
 })
 public class User extends BaseEntity<Integer> {
 
-    @Column(name = "user_name")
+    @Column(name = "user_name", unique = true)
     private String userName;
 
     @Column(name = "national_code")
@@ -34,11 +34,10 @@ public class User extends BaseEntity<Integer> {
     @Column(name = "password")
     private String password;
 
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Address address;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private Set<Role> roles;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+    private Role role;
 }
